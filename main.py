@@ -77,6 +77,32 @@ def update_task(conn, task):
     cur.execute(sql, task)
     conn.commit()
 
+
+def delete_task(conn, id):
+    """
+    Delete a task by task id
+    :param conn:  Connection to the SQLite database
+    :param id: id of the task
+    :return:
+    """
+    sql = 'DELETE FROM tasks WHERE id=?'
+    cur = conn.cursor()
+    cur.execute(sql, (id,))
+    conn.commit()
+
+
+def delete_all_tasks(conn):
+    """
+    Delete all rows in the tasks table
+    :param conn: Connection to the SQLite database
+    :return:
+    """
+    sql = 'DELETE FROM tasks'
+    cur = conn.cursor()
+    cur.execute(sql)
+    conn.commit()
+
+
 def main():
     database = r"/Users/Tanvi/sqlite/db/pythonsqlite.db"
 
@@ -129,9 +155,15 @@ def main():
     #     create_task(conn, task_1)
     #     create_task(conn, task_2)
 
-    # use the below code to update the table
+    # uncomment the below code to update the table
+    # with conn:
+    #     update_task(conn, (2, '2015-01-04', '2015-01-06', 2))
+
+    
+    # use the below code to delete the task
     with conn:
-        update_task(conn, (2, '2015-01-04', '2015-01-06', 2))
+        delete_task(conn, 2);
+        # delete_all_tasks(conn);
 
 
 if __name__ == '__main__':
