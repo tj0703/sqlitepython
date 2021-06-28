@@ -103,6 +103,37 @@ def delete_all_tasks(conn):
     conn.commit()
 
 
+def select_all_tasks(conn):
+    """
+    Query all rows in the tasks table
+    :param conn: the Connection object
+    :return:
+    """
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM tasks")
+
+    rows = cur.fetchall()
+
+    for row in rows:
+        print(row)
+
+
+def select_task_by_priority(conn, priority):
+    """
+    Query tasks by priority
+    :param conn: the Connection object
+    :param priority:
+    :return:
+    """
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM tasks WHERE priority=?", (priority,))
+
+    rows = cur.fetchall()
+
+    for row in rows:
+        print(row)
+
+
 def main():
     database = r"/Users/Tanvi/sqlite/db/pythonsqlite.db"
 
@@ -159,12 +190,20 @@ def main():
     # with conn:
     #     update_task(conn, (2, '2015-01-04', '2015-01-06', 2))
 
-    
-    # use the below code to delete the task
-    with conn:
-        delete_task(conn, 2);
-        # delete_all_tasks(conn);
 
+    # uncomment the below code to delete the task
+    # with conn:
+    #     delete_task(conn, 2);
+    #     # delete_all_tasks(conn);
+
+    # use the below code to to query the db
+    with conn:
+        print("1. Query task by priority:")
+        select_task_by_priority(conn, 1)
+
+        print("2. Query all tasks")
+        select_all_tasks(conn)
+        
 
 if __name__ == '__main__':
     main()
