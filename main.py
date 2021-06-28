@@ -61,6 +61,22 @@ def create_table(conn, create_table_sql):
         print(e)
 
 
+def update_task(conn, task):
+    """
+    update priority, begin_date, and end date of a task
+    :param conn:
+    :param task:
+    :return: project id
+    """
+    sql = ''' UPDATE tasks
+              SET priority = ? ,
+                  begin_date = ? ,
+                  end_date = ?
+              WHERE id = ?'''
+    cur = conn.cursor()
+    cur.execute(sql, task)
+    conn.commit()
+
 def main():
     database = r"/Users/Tanvi/sqlite/db/pythonsqlite.db"
 
@@ -99,19 +115,23 @@ def main():
     # else:
     #     print("Error! cannot create the database connection.")
 
-    # use the below code to insert data
+    # uncomment the below code to insert data
+    # with conn:
+    #     # create a new project
+    #     project = ('Cool App with SQLite & Python', '2015-01-01', '2015-01-30');
+    #     project_id = create_project(conn, project)
+    #
+    #     # tasks
+    #     task_1 = ('Analyze the requirements of the app', 1, 1, project_id, '2015-01-01', '2015-01-02')
+    #     task_2 = ('Confirm with user about the top requirements', 1, 1, project_id, '2015-01-03', '2015-01-05')
+    #
+    #     # create tasks
+    #     create_task(conn, task_1)
+    #     create_task(conn, task_2)
+
+    # use the below code to update the table
     with conn:
-        # create a new project
-        project = ('Cool App with SQLite & Python', '2015-01-01', '2015-01-30');
-        project_id = create_project(conn, project)
-
-        # tasks
-        task_1 = ('Analyze the requirements of the app', 1, 1, project_id, '2015-01-01', '2015-01-02')
-        task_2 = ('Confirm with user about the top requirements', 1, 1, project_id, '2015-01-03', '2015-01-05')
-
-        # create tasks
-        create_task(conn, task_1)
-        create_task(conn, task_2)
+        update_task(conn, (2, '2015-01-04', '2015-01-06', 2))
 
 
 if __name__ == '__main__':
