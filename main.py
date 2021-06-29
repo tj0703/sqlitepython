@@ -159,9 +159,6 @@ def main():
     #                                 FOREIGN KEY (project_id) REFERENCES projects (id)
     #                             );"""
     #
-    # # create a database connection
-    # conn = create_connection(database)
-    #
     # # create tables
     # if conn is not None:
     #     # create projects table
@@ -203,7 +200,7 @@ def main():
 
         print("2. Query all tasks")
         select_all_tasks(conn)
-        
+
 
 if __name__ == '__main__':
     main()
